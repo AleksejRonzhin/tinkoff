@@ -14,13 +14,18 @@ class Hero(name: String, override var HP: Int = 100,
 
     override fun hit(target: Unit)
     {
-        println("${this.name} hit ${target.name}(${target.HP}-${this.damage})")
-        target.HP -= this.damage
-        target.getInfo()
-        if(target.HP < 1){
-            this.lvlUp()
-            println("${this.name} kill ${target.name} and get lvl-up! New lvl is ${this.lvl}")
-            target.HP = 100
+        if(target is Enemy) {
+            println("${this.name} hit ${target.name}(${target.HP}-${this.damage})")
+            target.HP -= this.damage
+            if (target.HP < 1) {
+                this.lvlUp()
+                println("${this.name} kill ${target.name} and get lvl-up! New lvl is ${this.lvl}")
+                target.HP = 100
+            }
+        }
+        else
+        {
+            println("${this.name}: I will not hit ${target.name}. I can hit only enemy")
         }
     }
 

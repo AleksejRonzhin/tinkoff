@@ -7,17 +7,36 @@ class Ally(name: String, override var HP: Int = 100,
     }
 
     override fun hit(target: Unit) {
-        println("${this.name} hit ${target.name}(${target.HP}-${this.damage})")
-        target.HP -= this.damage
-        if(target.HP < 1){
-            println("${this.name} kill ${target.name}!")
-            target.HP = 100
+        if(target is Enemy)
+        {
+            println("${this.name} hit ${target.name}(${target.HP}-${this.damage})")
+            target.HP -= this.damage
+            if(target.HP < 1){
+                println("${this.name} kill ${target.name}!")
+                target.HP = 100
+            }
         }
+        else
+        {
+            println("${this.name}: I will not hit ${target.name}. I can hit only enemy")
+        }
+
     }
 
     fun hill(target: Unit){
-        println("${this.name} hill ${target.name}(${target.HP}+20)")
-        target.HP += 20
+        if(target !is Enemy)
+        {
+            println("${this.name} hill ${target.name}(${target.HP}+20)")
+            target.HP += 20
+            if(target.HP>100)
+            {
+                target.HP=100
+            }
+        }
+        else
+        {
+            println("${this.name}: I will not hill ${target.name}. He is Enemy")
+        }
     }
 
 }

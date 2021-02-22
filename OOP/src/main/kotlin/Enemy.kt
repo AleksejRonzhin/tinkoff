@@ -1,5 +1,5 @@
-class Enemy(name: String, var race:String, override var HP: Int = 100,
-       override var damage: Int = 30): Unit(name)
+class Enemy(name: String, var race:String, override var HP: Int = 200,
+       override var damage: Int = 50): Unit(name)
 {
     override fun sayHello()
     {
