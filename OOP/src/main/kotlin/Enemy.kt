@@ -1,5 +1,5 @@
-class Enemy(name: String, var race:String, override var HP: Int = 200,
-       override var damage: Int = 50): Unit(name)
+class Enemy(name: String, var race:String, override var health: Int = 200,
+            override var damage: Int = 50): Unit(name)
 {
     override fun sayHello()
     {
@@ -7,11 +7,11 @@ class Enemy(name: String, var race:String, override var HP: Int = 200,
     }
 
     override fun hit(target: Unit) {
-        println("${this.name} hit ${target.name}(${target.HP}-${this.damage})")
-        target.HP -= this.damage
-        if(target.HP < 1){
+        println("${this.name} hit ${target.name}(${target.health}-${this.damage})")
+        target.health -= this.damage
+        if(target.health < 1){
             println("${this.name} kill ${target.name}! :(")
-            target.HP = 100
+            target.health = 100
         }
     }
 
@@ -19,4 +19,10 @@ class Enemy(name: String, var race:String, override var HP: Int = 200,
     {
         println("${this.name} shout: ${this.race}, I need help!")
     }
+
+    fun callFriends(race: String)
+    {
+        println("${this.name} shout: $race, I need help!")
+    }
+
 }

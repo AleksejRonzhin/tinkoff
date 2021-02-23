@@ -1,6 +1,6 @@
 abstract class Unit(val name: String)
 {
-    abstract var HP:Int
+    abstract var health:Int
     abstract var damage:Int
 
     open fun sayHello()
@@ -10,7 +10,7 @@ abstract class Unit(val name: String)
 
     fun getInfo()
     {
-        println("Name: $name, HP: $HP, damage: $damage")
+        println("Name: $name, HP: $health, damage: $damage")
     }
 
     abstract fun hit(target:Unit)

@@ -1,4 +1,4 @@
-class Hero(name: String, override var HP: Int = 100,
+class Hero(name: String, override var health: Int = 100,
            override var damage: Int = 20):Unit(name)
 {
     private var lvl = 1
@@ -15,12 +15,12 @@ class Hero(name: String, override var HP: Int = 100,
     override fun hit(target: Unit)
     {
         if(target is Enemy) {
-            println("${this.name} hit ${target.name}(${target.HP}-${this.damage})")
-            target.HP -= this.damage
-            if (target.HP < 1) {
+            println("${this.name} hit ${target.name}(${target.health}-${this.damage})")
+            target.health -= this.damage
+            if (target.health < 1) {
                 this.lvlUp()
                 println("${this.name} kill ${target.name} and get lvl-up! New lvl is ${this.lvl}")
-                target.HP = 100
+                target.health = 100
             }
         }
         else

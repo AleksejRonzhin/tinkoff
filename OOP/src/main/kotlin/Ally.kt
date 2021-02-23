@@ -1,5 +1,5 @@
-class Ally(name: String, override var HP: Int = 100,
-            override var damage: Int = 20): Unit(name)
+class Ally(name: String, override var health: Int = 100,
+           override var damage: Int = 20): Unit(name)
 {
     override fun sayHello()
     {
@@ -9,11 +9,11 @@ class Ally(name: String, override var HP: Int = 100,
     override fun hit(target: Unit) {
         if(target is Enemy)
         {
-            println("${this.name} hit ${target.name}(${target.HP}-${this.damage})")
-            target.HP -= this.damage
-            if(target.HP < 1){
+            println("${this.name} hit ${target.name}(${target.health}-${this.damage})")
+            target.health -= this.damage
+            if(target.health < 1){
                 println("${this.name} kill ${target.name}!")
-                target.HP = 100
+                target.health = 100
             }
         }
         else
@@ -26,11 +26,11 @@ class Ally(name: String, override var HP: Int = 100,
     fun hill(target: Unit){
         if(target !is Enemy)
         {
-            println("${this.name} hill ${target.name}(${target.HP}+20)")
-            target.HP += 20
-            if(target.HP>100)
+            println("${this.name} hill ${target.name}(${target.health}+20)")
+            target.health += 20
+            if(target.health>100)
             {
-                target.HP=100
+                target.health=100
             }
         }
         else
