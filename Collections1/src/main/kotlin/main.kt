@@ -1,6 +1,3 @@
-fun <T> stackOf(): Stack<T> = Stack()
-fun <T> queueOf(): Queue<T> = Queue()
-
 fun main(){
     val stack = stackOf<Int>()
 
