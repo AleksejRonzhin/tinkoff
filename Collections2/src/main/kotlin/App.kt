@@ -1,8 +1,16 @@
 fun main(){
 
-    val list1 = mutableListOf<Book>(Book(1, "Мертвые души","Гоголь",2010),
-    Book(2, "Война и мир","Толстой", 2015))
+    val cars = SourceOfBooks.getAll()
 
-    print(list1)
+    cars.forEach(){
+        println(it)
+    }
+    println(SourceOfBooks.getBook(2))
+
+    val bookReviews = SourceOfReviews.getAll()
+    bookReviews.forEach(){
+        println(it)
+    }
+    println(SourceOfReviews.getBook(2))
 
 }
