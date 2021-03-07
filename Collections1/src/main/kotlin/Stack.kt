@@ -9,5 +9,12 @@ class Stack<T> {
     }
 
     fun pop(): T? = this.list.removeLastOrNull()
+}
 
+fun <T> stackOf(vararg elements: T): Stack<T> {
+    val stack = Stack<T>()
+    elements.forEach {
+        stack.push(it)
+    }
+    return stack
 }

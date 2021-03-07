@@ -1,18 +1,14 @@
 fun main(){
-    val stack = stackOf<Int>()
+    val stack = stackOf<Int>(6, 8, 0, 5)
+    stack.push(3)
     println("Stack:")
-    for(i in 1..5){
-        stack.push(i)
-    }
     while (!stack.isEmpty()){
         println(stack.pop())
     }
     println(stack.pop())
-    val queue = queueOf<String>()
+    val queue = queueOf<String>("A","BB","CCC")
+    queue.enqueue("One")
     println("\nQueue:")
-    queue.enqueue("On22e")
-    queue.enqueue("Tw33o")
-    queue.enqueue("Thr22ee")
     while (!queue.isEmpty()){
         println(queue.dequeue())
     }

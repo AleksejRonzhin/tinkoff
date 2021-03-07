@@ -10,3 +10,11 @@ class Queue<T> {
 
     fun dequeue(): T? = this.list.removeFirstOrNull()
 }
+
+fun <T> queueOf(vararg elements: T): Queue<T> {
+    val queue = Queue<T>()
+    elements.forEach {
+        queue.enqueue(it)
+    }
+    return queue
+}
