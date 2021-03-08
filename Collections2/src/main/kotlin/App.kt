@@ -13,4 +13,7 @@ fun main(){
     }
     println(SourceOfReviews.getBook(2))
 
+    Service.getBookWithReviews().forEach(){
+        println(it)
+    }
 }
