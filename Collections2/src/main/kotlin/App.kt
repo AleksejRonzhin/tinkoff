@@ -1,3 +1,6 @@
+import Service.Companion.groupByAuthor
+import Service.Companion.sortByRating
+
 fun main(){
 
     val cars = SourceOfBooks.getAll()
@@ -12,8 +15,18 @@ fun main(){
         println(it)
     }
     println(SourceOfReviews.getBook(2))
-
-    Service.getBookWithReviews().forEach(){
+    println()
+    val listBook = Service.getBookWithReviews()
+    listBook.forEach(){
         println(it)
     }
+    println()
+    listBook.sortByRating().forEach(){
+        println(it)
+    }
+    println()
+    listBook.groupByAuthor().forEach(){
+        println(it)
+    }
+
 }

@@ -9,7 +9,13 @@ class Service {
             }
         }
 
+        fun List<BookWithReviews>.sortByRating(): List<BookWithReviews>{
+            return this.sortedBy { it.rating }.reversed()
+        }
 
+        fun List<BookWithReviews>.groupByAuthor(): Map<String, List<BookWithReviews>>{
+            return this.groupBy { it.author }
+        }
 
     }
 }
