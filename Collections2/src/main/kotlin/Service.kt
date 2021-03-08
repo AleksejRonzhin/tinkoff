@@ -9,16 +9,15 @@ class Service {
             }
         }
 
-        fun List<BookWithReviews>.sortByRating(): List<BookWithReviews>{
+        fun List<BookWithReviews>.sortByRating(): List<BookWithReviews> {
             return this.sortedBy { it.rating }.reversed()
         }
 
-        fun List<BookWithReviews>.groupByAuthor(): Map<String, List<BookWithReviews>>{
+        fun List<BookWithReviews>.groupByAuthor(): Map<String, List<BookWithReviews>> {
             return this.groupBy { it.author }
         }
 
-        fun List<BookWithReviews>.getQuantity(predicate: (BookWithReviews) -> Boolean ):Int
-        {
+        fun List<BookWithReviews>.getQuantity(predicate: (BookWithReviews) -> Boolean ):Int {
             return this.count(predicate)
         }
 
