@@ -1,3 +1,4 @@
+import Service.Companion.getQuantity
 import Service.Companion.groupByAuthor
 import Service.Companion.sortByRating
 
@@ -28,5 +29,7 @@ fun main(){
     listBook.groupByAuthor().forEach(){
         println(it)
     }
+    println()
+    println(listBook.getQuantity { it.year>2012 })
 
 }

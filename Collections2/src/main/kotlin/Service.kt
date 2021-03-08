@@ -17,5 +17,10 @@ class Service {
             return this.groupBy { it.author }
         }
 
+        fun List<BookWithReviews>.getQuantity(predicate: (BookWithReviews) -> Boolean ):Int
+        {
+            return this.count(predicate)
+        }
+
     }
 }
