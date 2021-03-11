@@ -1,14 +1,21 @@
 class Queue<T> {
 
-    private val list = mutableListOf<T>()
+    private val list = mutableListOf<T?>()
+    private var firstIndex = 0
 
-    fun isEmpty(): Boolean = this.list.isEmpty()
+    fun isEmpty(): Boolean = this.list.lastIndex < firstIndex
 
     fun enqueue(element: T){
         this.list.add(element)
     }
 
-    fun dequeue(): T? = this.list.removeFirstOrNull()
+    fun dequeue(): T? {
+        return if (isEmpty()) null else {
+            val temp = list[firstIndex]
+            list[firstIndex++] = null
+            temp
+        }
+    }
 }
 
 fun <T> queueOf(vararg elements: T): Queue<T> {
