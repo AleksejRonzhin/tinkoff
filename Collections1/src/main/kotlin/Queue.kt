@@ -6,7 +6,12 @@ class Queue<T> {
     fun isEmpty(): Boolean = this.list.lastIndex < firstIndex
 
     fun enqueue(element: T){
+        if(this.isEmpty()){
+            this.list.clear()
+            firstIndex = 0
+        }
         this.list.add(element)
+//        println(list.lastIndex);
     }
 
     fun dequeue(): T? {
