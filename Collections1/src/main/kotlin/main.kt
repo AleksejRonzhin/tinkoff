@@ -12,5 +12,4 @@ fun main(){
     while (!queue.isEmpty()){
         println(queue.dequeue())
     }
-
 }
