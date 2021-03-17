@@ -4,15 +4,23 @@ class Client(url : String) {
 
     val conn = DriverManager.getConnection("jdbc:sqlite:.$url")
 
-    fun executeUpdate(sql: String){
+    fun executeUpdate(sql:String){
         this.conn.createStatement().executeUpdate(sql)
     }
 
-    fun executeQuery(sql : String): List <HashMap<String, Any>> {
+    fun executeQuery(sql : String, vararg args : String): List <HashMap<String, Any>> {
 
         val resList = mutableListOf<HashMap<String, Any>>()
 
         val preparedStatement = this.conn.prepareStatement(sql)
+
+        //args.forEachIndexed{index, el -> preparedStatement.setString(index+1, el) }
+        args.mapIndexed { index: Int, item: String ->
+            Pair(index, item)
+        }.forEach { pair ->
+            preparedStatement.setString(pair.first + 1, pair.second)
+        }
+
 
         val res  = preparedStatement.executeQuery()
 
@@ -29,9 +37,9 @@ class Client(url : String) {
             }
             resList.add(map)
         }
-
         return resList
     }
+
 
 
     fun close() = this.conn.close()
