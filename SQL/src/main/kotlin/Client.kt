@@ -14,13 +14,7 @@ class Client(url : String) {
 
         val preparedStatement = this.conn.prepareStatement(sql)
 
-        //args.forEachIndexed{index, el -> preparedStatement.setString(index+1, el) }
-        args.mapIndexed { index: Int, item: String ->
-            Pair(index, item)
-        }.forEach { pair ->
-            preparedStatement.setString(pair.first + 1, pair.second)
-        }
-
+        args.forEachIndexed{index, el -> preparedStatement.setString(index+1, el) }
 
         val res  = preparedStatement.executeQuery()
 

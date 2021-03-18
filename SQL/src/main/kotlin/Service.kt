@@ -38,27 +38,35 @@ class Service {
             }
         }
 
-        fun getBooksBuyingMoreOneTime(client: Client, count: Int): List<Book> {
+        fun getBooksBuyingMoreOneTime(client: Client): List<Book> {
             val sql = """
                 SELECT *
                 FROM Book
                 WHERE id IN (SELECT bookId
                                 FROM BookBuying
                                 GROUP BY BookId
-                                HAVING Count(BookId) > $count)                    
-            """.trimIndent()
-            val sql2 = """
-                SELECT Book.* 
-                    FROM Book JOIN BookBuying ON Book.id = BookBuying.bookId
-                    GROUP BY BookBuying.BookId
-                    HAVING Count(BookId) > ?
+                                HAVING Count(BookId) > 1)                    
             """.trimIndent()
             val result = client.executeQuery(sql)
-
 
             return result.map {
                 Book(it["id"] as Int, it["name"] as String, it["publishYear"] as Int)
             }
         }
+
+        fun getAuthorBornInEighteenthCenturySortedByBirthYear(client: Client): List<Author> {
+            val sql = """
+                SELECT *
+                    FROM Author
+                    WHERE birthYear between 1800 and 1900
+                    ORDER BY birthYear DESC
+                    
+            """.trimIndent()
+            val result = client.executeQuery(sql)
+            return result.map {
+                Author(it["id"] as Int, it["name"] as String, it["birthYear"] as Int)
+            }
+        }
+
     }
 }
