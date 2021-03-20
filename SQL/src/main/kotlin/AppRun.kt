@@ -10,7 +10,7 @@ fun main() {
 		Service.getAdultCustomers(client).forEach {
 			println(it)
 		}
-		val authorId = 2
+		val authorId = 1
 		println("Все книги автора с id = $authorId:")
 		Service.getAllBooksAuthorById(client, authorId).forEach {
 			println(it)
