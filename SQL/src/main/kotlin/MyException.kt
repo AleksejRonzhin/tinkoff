@@ -1,0 +1,1 @@
+class MyException(message: String) : RuntimeException(message)

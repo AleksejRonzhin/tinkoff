@@ -1,9 +1,11 @@
+import java.sql.SQLException
+
 class Init {
 
-    companion object {
+	companion object {
 
-        fun createTables(client: Client) {
-            val sql = """
+		fun createTables(client: Client) {
+			val sql = """
                 CREATE TABLE Book(
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
@@ -26,7 +28,7 @@ class Init {
                 CREATE TABLE Customer(
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
-                    age INTEGER CHECK(age > 14)
+                    age INTEGER
                 );
                 
                 CREATE TABLE BookBuying(
@@ -37,11 +39,16 @@ class Init {
                     FOREIGN KEY (bookId) REFERENCES Book(id)
                     FOREIGN KEY (customerID) REFERENCES Customer(id)
                 );"""
-            client.executeUpdate(sql)
-        }
+			try {
+				client.executeUpdate(sql)
+			} catch (e: SQLException) {
+				throw MyException("Не удалось создать таблицы")
+			}
 
-        fun insertInto(client: Client){
-            val sql = """
+		}
+
+		fun insertInto(client: Client) {
+			val sql = """
                 INSERT INTO Book(name, publishYear)
                     VALUES
                         ("Преступление и наказание", 2002),
@@ -69,10 +76,10 @@ class Init {
                 
                 INSERT INTO Customer(name, age)
                     VALUES
-                        ("Сидоров", 20),
-                        ("Иванов", 30),
-                        ("Петров", 40),
-                        ("Никитин", 50);
+                        ("Сидоров", 10),
+                        ("Иванов", 18),
+                        ("Петров", 27),
+                        ("Никитин", 15);
                         
                 INSERT INTO BookBuying(bookId, customerId, date)
                     VALUES
@@ -82,21 +89,28 @@ class Init {
                         (3, 4, "05.04.2020"),
                         (1, 3, "09.01.2021");
             """.trimIndent()
+			try {
+				client.executeUpdate(sql)
+			} catch (e: SQLException) {
+				throw MyException("Не удалось заполнить таблицы")
+			}
+		}
 
-            client.executeUpdate(sql)
-        }
-
-        fun dropTable(client: Client){
-            val sql = """
+		fun dropTable(client: Client) {
+			val sql = """
                 DROP TABLE BookBuying;
                 DROP TABLE Customer;
                 DROP TABLE BookAuthor;
                 DROP TABLE Author;
                 DROP TABLE Book;
             """.trimIndent()
-            client.executeUpdate(sql)
-        }
+			try {
+				client.executeUpdate(sql)
+			} catch (e: SQLException) {
+				throw MyException("Не удалось удалить таблицы")
+			}
+		}
 
-    }
+	}
 
 }
