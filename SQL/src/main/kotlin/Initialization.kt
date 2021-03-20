@@ -1,6 +1,6 @@
 import java.sql.SQLException
 
-class Init {
+class Initialization {
 
 	companion object {
 
@@ -47,7 +47,7 @@ class Init {
 
 		}
 
-		fun insertInto(client: Client) {
+		fun fillTables(client: Client) {
 			val sql = """
                 INSERT INTO Book(name, publishYear)
                     VALUES
@@ -96,7 +96,7 @@ class Init {
 			}
 		}
 
-		fun dropTable(client: Client) {
+		fun dropTables(client: Client) {
 			val sql = """
                 DROP TABLE BookBuying;
                 DROP TABLE Customer;

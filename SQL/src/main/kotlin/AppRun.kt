@@ -1,8 +1,8 @@
 fun main() {
 	val client = Client("/SQL/src/main/resources/BookShop.db")
 	try {
-		Init.createTables(client)
-		Init.insertInto(client)
+		Initialization.createTables(client)
+		Initialization.fillTables(client)
 		val bookId = 2
 		println("Книга с id = $bookId:")
 		println(Service.getBookById(client, bookId))
@@ -27,7 +27,7 @@ fun main() {
 		println(e.message)
 	} finally {
 		try {
-			Init.dropTable(client)
+			Initialization.dropTables(client)
 			println("Таблицы удалены")
 		} catch (e: MyException) {
 			println(e.message)
