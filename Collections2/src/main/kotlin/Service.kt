@@ -1,25 +1,21 @@
 class Service {
 
-    companion object{
+	companion object {
 
-        fun getBookWithReviews(): List<BookWithReviews> {
-            return SourceOfBooks.getAll().map {
-                val reviews = SourceOfReviews.getBook(it.id)
-                BookWithReviews(it.id, it.name, it.author, it.year, reviews?.rating, reviews?.reviewsId)
-            }
-        }
+		fun getBookWithReviews(): List<BookWithReviews> {
+			return SourceOfBooks.getAll().map {
+				val reviews = SourceOfReviews.getBookReview(it.id)
+				BookWithReviews(it.id, it.name, it.author, it.year, reviews?.rating, reviews?.reviewsId)
+			}
+		}
 
-        fun List<BookWithReviews>.sortByRating(): List<BookWithReviews> {
-            return this.sortedBy { it.rating }.reversed()
-        }
+		fun sortByRating(list: List<BookWithReviews>): List<BookWithReviews> = list.sortedBy { it.rating }.reversed()
 
-        fun List<BookWithReviews>.groupByAuthor(): Map<String, List<BookWithReviews>> {
-            return this.groupBy { it.author }
-        }
 
-        fun List<BookWithReviews>.getQuantity(predicate: (BookWithReviews) -> Boolean ):Int {
-            return this.count(predicate)
-        }
+		fun groupByAuthor(list: List<BookWithReviews>): Map<String, List<BookWithReviews>> = list.groupBy { it.author }
 
-    }
+
+		fun List<BookWithReviews>.getQuantity(predicate: (BookWithReviews) -> Boolean): Int = this.count(predicate)
+
+	}
 }
