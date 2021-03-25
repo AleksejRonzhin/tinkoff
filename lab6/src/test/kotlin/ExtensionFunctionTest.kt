@@ -6,16 +6,16 @@ import java.lang.NumberFormatException
 class ExtensionFunctionTest {
 
 	@Test
-	fun `name later`(){
+	fun `radiansInDegree extension String successful conversion`() {
 		val result = "1.0".radiansInDegree()
 		assertEquals("57.3", result)
 	}
 
 	@Test
-	fun `later`(){
-//		assertThrows<NumberFormatException> {
-//			"text".radiansInDegree()
-//		}
+	fun `radiansInDegree extension String with not number format string`() {
+		assertThrows<NumberFormatException> {
+			"text".radiansInDegree()
+		}
 	}
 
 }
