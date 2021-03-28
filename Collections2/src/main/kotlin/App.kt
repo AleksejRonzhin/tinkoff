@@ -1,5 +1,3 @@
-import Service.Companion.getQuantity
-
 fun main() {
 	val books = SourceOfBooks.getAll()
 	println("All books:")
@@ -21,16 +19,16 @@ fun main() {
 		println(it)
 	}
 	println("Sorted by rating:")
-	Service.sortByRating(listBook).forEach() {
+	Service.sortByRating().forEach() {
 		println(it)
 	}
 	println("Grouped by author:")
-	Service.groupByAuthor(listBook).forEach {
+	Service.groupByAuthor().forEach {
 		println(it)
 	}
 	print("Number of books published since 2012: ")
-	println(listBook.getQuantity { it.year > 2012 })
+	println(Service.getQuantity { it.year > 2012 })
 	print("Number of Pushkin's books: ")
-	println(listBook.getQuantity { it.author == "Пушкин" })
+	println(Service.getQuantity { it.author == "Пушкин" })
 
 }
