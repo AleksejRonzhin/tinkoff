@@ -1,14 +1,17 @@
+import java.io.Closeable
 import java.sql.*
 
-class Client(url: String) {
+class Client(url: String) : Closeable {
 
 	private val conn: Connection = DriverManager.getConnection("jdbc:sqlite:.$url")
 
 	fun executeUpdate(sql: String) {
-		this.conn.createStatement().executeUpdate(sql)
+		val cs = this.conn.createStatement()
+		cs.executeUpdate(sql)
+		cs.close()
 	}
 
-	fun executeQuery(sql: String, vararg args: String): List<HashMap<String, Any>> {
+	fun <T> executeQuery(sql: String, vararg args: String, lambda: (HashMap<String, Any>) -> T): List<T> {
 		val resList = mutableListOf<HashMap<String, Any>>()
 		val preparedStatement = this.conn.prepareStatement(sql)
 		args.forEachIndexed { index, el -> preparedStatement.setString(index + 1, el) }
@@ -16,20 +19,21 @@ class Client(url: String) {
 		val meta = preparedStatement.metaData
 		while (res.next()) {
 			val map = hashMapOf<String, Any>()
-			var attributeName: String
 			var i = 1
 			while (i <= meta.columnCount) {
-				attributeName = meta.getColumnName(i)
-				map[attributeName] = res.getObject(i)
-				i++
+				map[meta.getColumnName(i)] = res.getObject(i++)
 			}
 			resList.add(map)
 		}
 		if (resList.isEmpty()) {
-			throw MyException("В результате запроса нет ни одного элемента")
+			throw SQLException("В результате запроса нет ни одного элемента")
 		}
-		return resList
+		preparedStatement.close()
+		res.close()
+		return resList.map { lambda(it) }
 	}
 
-	fun close() = this.conn.close()
+	override fun close() {
+		conn.close()
+	}
 }

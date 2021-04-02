@@ -1,9 +1,7 @@
 import java.sql.SQLException
 
 class Initialization {
-
 	companion object {
-
 		fun createTables(client: Client) {
 			val sql = """
                 CREATE TABLE Book(
@@ -42,7 +40,7 @@ class Initialization {
 			try {
 				client.executeUpdate(sql)
 			} catch (e: SQLException) {
-				throw MyException("Не удалось создать таблицы")
+				throw SQLException("Не удалось создать таблицы")
 			}
 
 		}
@@ -92,7 +90,7 @@ class Initialization {
 			try {
 				client.executeUpdate(sql)
 			} catch (e: SQLException) {
-				throw MyException("Не удалось заполнить таблицы")
+				throw SQLException("Не удалось заполнить таблицы")
 			}
 		}
 
@@ -107,10 +105,8 @@ class Initialization {
 			try {
 				client.executeUpdate(sql)
 			} catch (e: SQLException) {
-				throw MyException("Не удалось удалить таблицы")
+				throw SQLException("Не удалось удалить таблицы")
 			}
 		}
-
 	}
-
 }
