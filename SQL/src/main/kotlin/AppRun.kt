@@ -2,29 +2,29 @@ import java.sql.SQLException
 
 fun main() {
 	val client = Client("/SQL/src/main/resources/BookShop.db")
-	Service.client = client
+	val service = Service(client)
 	client.use {
 		try {
 			Initialization.createTables(it)
 			Initialization.fillTables(it)
 			val bookId = 2
 			println("Книга с id = $bookId:")
-			println(Service.getBookById(bookId))
+			println(service.getBookById(bookId))
 			println("Совершеннолетние покупатели:")
-			Service.getAdultCustomers().forEach { el ->
+			service.getAdultCustomers().forEach { el ->
 				println(el)
 			}
 			val authorId = 1
 			println("Все книги автора с id = $authorId:")
-			Service.getAllBooksAuthorById(authorId).forEach { el ->
+			service.getAllBooksAuthorById(authorId).forEach { el ->
 				println(el)
 			}
 			println("Все книги купленные больше одного раза:")
-			Service.getBooksBuyingMoreOneTime().forEach { el ->
+			service.getBooksBuyingMoreOneTime().forEach { el ->
 				println(el)
 			}
 			println("Авторы 18 века:")
-			Service.getAuthorBornInEighteenthCenturySortedByBirthYear().forEach { el ->
+			service.getAuthorBornInEighteenthCenturySortedByBirthYear().forEach { el ->
 				println(el)
 			}
 		} catch (e: SQLException) {
