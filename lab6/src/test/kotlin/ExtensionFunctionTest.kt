@@ -13,8 +13,15 @@ class ExtensionFunctionTest {
 
 	@Test
 	fun `radiansInDegree extension String with not number format string`() {
-		assertThrows<NumberFormatException> {
+		assertThrows<MyException> {
 			"text".radiansInDegree()
+		}
+	}
+
+	@Test
+	fun `radiansInDegree extension empty string`() {
+		assertThrows<MyException> {
+			"".radiansInDegree()
 		}
 	}
 

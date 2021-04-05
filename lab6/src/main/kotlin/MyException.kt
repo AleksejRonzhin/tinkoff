@@ -1,0 +1,1 @@
+class MyException(message: String, cause: Throwable? = null) : Throwable(message, cause)
