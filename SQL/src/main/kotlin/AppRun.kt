@@ -1,5 +1,3 @@
-import java.sql.SQLException
-
 fun main() {
 	val client = Client("/SQL/src/main/resources/BookShop.db")
 	val service = Service(client)
@@ -27,14 +25,20 @@ fun main() {
 			service.getAuthorBornInEighteenthCenturySortedByBirthYear().forEach { el ->
 				println(el)
 			}
-		} catch (e: SQLException) {
+		} catch (e: MyException) {
 			println(e.message)
+			if (e.cause != null){
+				println(e.cause.message)
+			}
 		} finally {
 			try {
 				Initialization.dropTables(client)
 				println("Таблицы удалены")
-			} catch (e: SQLException) {
+			} catch (e: MyException) {
 				println(e.message)
+				if (e.cause != null){
+					println(e.cause.message)
+				}
 			}
 		}
 	}

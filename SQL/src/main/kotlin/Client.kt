@@ -7,30 +7,33 @@ class Client(url: String) : Closeable {
 
 	fun executeUpdate(sql: String) {
 		val cs = this.conn.createStatement()
-		cs.executeUpdate(sql)
-		cs.close()
+		try {
+			cs.executeUpdate(sql)
+		} finally {
+			cs.close()
+		}
 	}
 
-	fun <T> executeQuery(sql: String, vararg args: String, lambda: (HashMap<String, Any>) -> T): List<T> {
-		val resList = mutableListOf<HashMap<String, Any>>()
+	fun <T> executeQuery(sql: String, vararg args: String, lambda: (ResultSet?) -> T): List<T> {
+		val list = mutableListOf<T>()
 		val preparedStatement = this.conn.prepareStatement(sql)
-		args.forEachIndexed { index, el -> preparedStatement.setString(index + 1, el) }
-		val res = preparedStatement.executeQuery()
-		val meta = preparedStatement.metaData
-		while (res.next()) {
-			val map = hashMapOf<String, Any>()
-			var i = 1
-			while (i <= meta.columnCount) {
-				map[meta.getColumnName(i)] = res.getObject(i++)
+		try {
+			args.forEachIndexed { index, el -> preparedStatement.setString(index + 1, el) }
+			val res = preparedStatement.executeQuery()
+			try {
+				while (res.next()) {
+					list.add(lambda(res))
+				}
+				if (list.isEmpty()) {
+					throw SQLException("В результате запроса нет ни одного элемента")
+				}
+			} finally {
+				res.close()
 			}
-			resList.add(map)
+		} finally {
+			preparedStatement.close()
 		}
-		if (resList.isEmpty()) {
-			throw SQLException("В результате запроса нет ни одного элемента")
-		}
-		preparedStatement.close()
-		res.close()
-		return resList.map { lambda(it) }
+		return list
 	}
 
 	override fun close() {

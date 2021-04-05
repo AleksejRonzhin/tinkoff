@@ -12,13 +12,13 @@ class Service(private var client: Client) {
 	            """.trimIndent()
 			return client.executeQuery(sql, id.toString()) {
 				Book(
-					it["id"] as Int,
-					it["name"] as String,
-					it["publishYear"] as Int
+					it!!.getInt(1),
+					it.getString(2),
+					it.getInt(3)
 				)
 			}.first()
 		} catch (e: SQLException) {
-			throw SQLException("Не удалось выполнить запрос на получение книги по id")
+			throw MyException("Не удалось выполнить запрос на получение книги по id", e)
 		}
 	}
 
@@ -30,10 +30,10 @@ class Service(private var client: Client) {
             """.trimIndent()
 		try {
 			return client.executeQuery(sql) {
-				Customer(it["id"] as Int, it["name"] as String, it["age"] as Int)
+				Customer(it!!.getInt(1), it.getString(2), it.getInt(3))
 			}
 		} catch (e: SQLException) {
-			throw SQLException("Не удалось выполнить запрос на получение совершеннолетних покупателей")
+			throw MyException("Не удалось выполнить запрос на получение совершеннолетних покупателей", e)
 		}
 	}
 
@@ -47,13 +47,13 @@ class Service(private var client: Client) {
 		try {
 			return client.executeQuery(sql, id.toString()) {
 				Book(
-					it["id"] as Int,
-					it["name"] as String,
-					it["publishYear"] as Int
+					it!!.getInt(1),
+					it.getString(2),
+					it.getInt(3)
 				)
 			}
 		} catch (e: SQLException) {
-			throw SQLException("Не удалось выполнить запрос на получение книг автора по id")
+			throw MyException("Не удалось выполнить запрос на получение книг автора по id", e)
 		}
 	}
 
@@ -69,13 +69,13 @@ class Service(private var client: Client) {
 		try {
 			return client.executeQuery(sql) {
 				Book(
-					it["id"] as Int,
-					it["name"] as String,
-					it["publishYear"] as Int
+					it!!.getInt(1),
+					it.getString(2),
+					it.getInt(3)
 				)
 			}
 		} catch (e: SQLException) {
-			throw SQLException("Не удалось выполнить запрос на получение книг купленных больше 1 раза")
+			throw MyException("Не удалось выполнить запрос на получение книг купленных больше 1 раза", e)
 		}
 	}
 
@@ -89,10 +89,10 @@ class Service(private var client: Client) {
             """.trimIndent()
 		try {
 			return client.executeQuery(sql) {
-				Author(it["id"] as Int, it["name"] as String, it["birthYear"] as Int)
+				Author(it!!.getInt(1), it.getString(2), it.getInt(3))
 			}
 		} catch (e: SQLException) {
-			throw SQLException("Не удалось выполнить запрос на получение авторов 18 века")
+			throw MyException("Не удалось выполнить запрос на получение авторов 18 века", e)
 		}
 	}
 }

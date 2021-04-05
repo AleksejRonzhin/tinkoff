@@ -40,7 +40,7 @@ class Initialization {
 			try {
 				client.executeUpdate(sql)
 			} catch (e: SQLException) {
-				throw SQLException("Не удалось создать таблицы")
+				throw MyException("Не удалось создать таблицы", e)
 			}
 
 		}
@@ -90,7 +90,7 @@ class Initialization {
 			try {
 				client.executeUpdate(sql)
 			} catch (e: SQLException) {
-				throw SQLException("Не удалось заполнить таблицы")
+				throw MyException("Не удалось заполнить таблицы", e)
 			}
 		}
 
@@ -105,7 +105,7 @@ class Initialization {
 			try {
 				client.executeUpdate(sql)
 			} catch (e: SQLException) {
-				throw SQLException("Не удалось удалить таблицы")
+				throw MyException("Не удалось удалить таблицы", e)
 			}
 		}
 	}
