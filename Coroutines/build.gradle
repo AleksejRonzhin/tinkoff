@@ -11,11 +11,15 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'
 }
 
 test {
     useJUnitPlatform()
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all{
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
