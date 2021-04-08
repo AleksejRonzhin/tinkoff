@@ -12,5 +12,7 @@ class BookDAO {
 		)
 
 		fun getAllBooksAuthor(authorId: Int) = bookList.filter { it.authorId == authorId }
+
+		fun getAllBooks() = this.bookList
 	}
 }

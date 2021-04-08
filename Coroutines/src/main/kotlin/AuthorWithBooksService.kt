@@ -8,7 +8,7 @@ import models.Book
 class AuthorWithBooksService {
 	companion object {
 
-		suspend fun getAuthorWithBooks(id: Int) = runBlocking {
+		suspend fun getAuthorWithBooks(id: Int): AuthorWithBooks = runBlocking {
 			val authorJob = async { getAuthor(id) }
 			val booksJob = async { getAllBooksAuthor(id) }
 			val author = authorJob.await()
@@ -21,9 +21,16 @@ class AuthorWithBooksService {
 			)
 		}
 
-		private fun getAllBooksAuthor(authorId: Int): List<Book> = BookDAO.getAllBooksAuthor(authorId)
+		private suspend fun getAllBooksAuthor(authorId: Int): List<Book> {
+			delay(1000)
+			return BookDAO.getAllBooksAuthor(authorId)
+		}
 
-		private fun getAuthor(id: Int): Author? = AuthorDAO.getAuthorById(id)
+
+		private suspend fun getAuthor(id: Int): Author? {
+			delay(1000)
+			return AuthorDAO.getAuthorById(id)
+		}
 
 	}
 }
