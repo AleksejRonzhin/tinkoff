@@ -17,7 +17,7 @@ class AuthorController {
 		if(author != null) {
 			return author
 		}else{
-			throw Exception()
+			throw MyException("Книги с id = $id не найдено")
 		}
 	}
 }

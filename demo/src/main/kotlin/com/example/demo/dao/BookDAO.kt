@@ -13,6 +13,6 @@ class BookDAO {
 
 		fun getAllBooks() = this.bookList
 
-		fun getBookById(id: Int) = this.bookList.find { it.id == id }
+		fun getBookById(id: Int): Book? = this.bookList.find { it.id == id }
 	}
 }

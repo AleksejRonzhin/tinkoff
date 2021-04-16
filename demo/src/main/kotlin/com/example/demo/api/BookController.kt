@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/book")
 class BookController {
 
-	@GetMapping("/id")
+	@GetMapping("/{id}")
 	fun getBookById(@PathVariable id: Int): Book {
 		val book = BookDAO.getBookById(id)
 		if (book != null){
 			return book
 		} else {
-			throw Exception()
+			throw MyException("Книги с id = $id не найдено")
 		}
 	}
 
@@ -41,7 +41,8 @@ class BookController {
 		return if (sourceBook != null){
 			ResponseEntity("Обновлена книга c номером $id: $book", HttpStatus.OK)
 		} else {
-			ResponseEntity("Книги с id = $id не нашлось", HttpStatus.NOT_FOUND)
+			throw MyException("Книги с id = $id не найдено")
+//			ResponseEntity("Книги с id = $id не нашлось", HttpStatus.NOT_FOUND)
 		}
 	}
 
@@ -51,7 +52,8 @@ class BookController {
 		return if (book != null){
 			ResponseEntity("Удалена книга c id = $id", HttpStatus.OK)
 		} else {
-			ResponseEntity("Книги с id = $id не нашлось", HttpStatus.NOT_FOUND)
+			throw MyException("Книги с id = $id не найдено")
+//			ResponseEntity("Книги с id = $id не нашлось", HttpStatus.NOT_FOUND)
 		}
 	}
 }
