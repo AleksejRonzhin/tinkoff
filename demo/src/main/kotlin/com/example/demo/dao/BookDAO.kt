@@ -1,6 +1,6 @@
-package DAO
+package com.example.demo.dao
 
-import models.Book
+import com.example.demo.models.Book
 
 class BookDAO {
 	companion object {
@@ -14,5 +14,7 @@ class BookDAO {
 		fun getAllBooksAuthor(authorId: Int) = bookList.filter { it.authorId == authorId }
 
 		fun getAllBooks() = this.bookList
+
+		fun getBookById(id: Int) = bookList.find { it.id == id }
 	}
 }

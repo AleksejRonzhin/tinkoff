@@ -1,6 +1,6 @@
-package DAO
+package com.example.demo.dao
 
-import models.Author
+import com.example.demo.models.Author
 
 class AuthorDAO {
 	companion object {
