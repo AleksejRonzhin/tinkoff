@@ -14,10 +14,10 @@ class AuthorController {
 	@GetMapping("/{id}")
 	fun getAuthorById(@PathVariable id: Int): Author {
 		val author = AuthorDAO.getAuthorById(id)
-		if(author != null) {
+		if (author != null) {
 			return author
-		}else{
-			throw MyException("Книги с id = $id не найдено")
+		} else {
+			throw MyException("Книги с id = $id не найдена")
 		}
 	}
 }

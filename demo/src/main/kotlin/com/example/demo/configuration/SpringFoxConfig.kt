@@ -10,6 +10,7 @@ import springfox.documentation.spring.web.plugins.Docket
 
 @Configuration
 class SpringFoxConfig {
+
 	@Bean
 	fun api(): Docket {
 		return Docket(DocumentationType.SWAGGER_2)
