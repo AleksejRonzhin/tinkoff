@@ -2,7 +2,9 @@ package students
 
 import io.ktor.routing.*
 import io.ktor.application.*
+import io.ktor.request.*
 import io.ktor.response.*
+import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.Database
 
 fun Application.studentModule(database: Database) {
@@ -15,6 +17,13 @@ fun Application.studentModule(database: Database) {
             get {
                 call.respond(service.findAll())
             }
+            post{
+                val request = call.receive<CreateStudentRequest>()
+                call.respond(service.create(request.name, request.facultyId))
+            }
         }
     }
 }
+
+@Serializable
+public data class CreateStudentRequest(val name: String, val facultyId: Int)
