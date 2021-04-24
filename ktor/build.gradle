@@ -5,7 +5,10 @@ plugins {
 }
 
 version "0.0.1"
-mainClassName = "ApplicationKt"
+
+application {
+    mainClass = "ApplicationKt"
+}
 
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"

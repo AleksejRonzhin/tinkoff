@@ -1,4 +1,5 @@
 import com.typesafe.config.ConfigFactory
+import faculties.facultyModule
 import io.github.config4k.extract
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -20,9 +21,9 @@ fun main() {
             coreComponents(config)
             studentComponents()
         }
-
         configureSerialization()
         studentModule()
+        facultyModule()
     }
 
     engine.start(wait = true)

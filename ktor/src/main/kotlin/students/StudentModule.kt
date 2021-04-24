@@ -23,7 +23,7 @@ fun Application.studentModule() {
             get {
                 call.respond(service.findAll())
             }
-            post{
+            post {
                 val request = call.receive<CreateStudentRequest>()
                 call.respond(service.create(request.name, request.facultyId))
             }

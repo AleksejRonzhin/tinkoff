@@ -1,9 +1,6 @@
 package students
 
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class StudentDao(private val database: Database) {
@@ -17,6 +14,37 @@ class StudentDao(private val database: Database) {
             it[Students.facultyId] = facultyId
         }
         Student(id.value, name, facultyId)
+    }
+
+    fun update(id: Int, name: String, facultyId: Int) = transaction(database){
+        Students.update({Students.id eq id}){
+            it[Students.name] = name
+            it[Students.facultyId] = facultyId
+        }
+    }
+
+    fun findById(id: Int): Student = transaction(database){
+        Students.select {
+            Students.id eq id
+        }.map(::extractStudent).single()
+    }
+
+    fun findByFacultyId(facultyId: Int): List<Student> = transaction(database){
+        Students.select {
+            Students.facultyId eq facultyId
+        }.map(::extractStudent)
+    }
+
+    fun moveToFaculties(id: Int, facultyId: Int) = transaction(database) {
+        Students.update({Students.id eq id}){
+            it[Students.facultyId] = facultyId
+        }
+    }
+
+    fun delete(id: Int) = transaction(database) {
+        Students.deleteWhere {
+            Students.id eq id
+        }
     }
 
     private fun extractStudent(row: ResultRow):Student = Student(
