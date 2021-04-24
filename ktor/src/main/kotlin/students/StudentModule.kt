@@ -6,11 +6,17 @@ import io.ktor.request.*
 import io.ktor.response.*
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.Database
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.ktor.closestDI
+import org.kodein.di.ktor.di
+import org.kodein.di.singleton
 
-fun Application.studentModule(database: Database) {
+fun Application.studentModule() {
 
-    val dao = StudentDao(database)
-    val service = StudentService(dao)
+//    val dao: StudentDao by closestDI().instance()
+    val service: StudentService by closestDI().instance()
 
     routing {
         route("/students"){
@@ -22,6 +28,15 @@ fun Application.studentModule(database: Database) {
                 call.respond(service.create(request.name, request.facultyId))
             }
         }
+    }
+}
+
+fun DI.Builder.studentComponents() {
+    bind<StudentDao>() with singleton {
+        StudentDao(instance())
+    }
+    bind<StudentService>() with singleton {
+        StudentService(instance())
     }
 }
 
