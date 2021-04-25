@@ -1,9 +1,9 @@
 package students
 
-import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.response.*
+import io.ktor.routing.*
 import kotlinx.serialization.Serializable
 import org.kodein.di.DI
 import org.kodein.di.bind
@@ -20,33 +20,40 @@ fun Application.studentModule() {
             get {
                 call.respond(service.findAll())
             }
+
             post {
                 val request = call.receive<CreateStudentRequest>()
                 call.respond(service.create(request.name, request.facultyId))
             }
+
             route("/{id}") {
                 get {
                     val id = call.parameters["id"]!!.toInt()
                     call.respond(service.findById(id))
                 }
+
                 put {
                     val id = call.parameters["id"]!!.toInt()
                     val request = call.receive<UpdateStudentRequest>()
                     call.respond(service.update(id, request.name, request.facultyId))
                 }
+
                 patch {
                     val id = call.parameters["id"]!!.toInt()
                     val request = call.receive<MoveToFacultyRequest>()
                     call.respond(service.moveToFaculty(id, request.facultyId))
                 }
+
                 delete {
                     val id = call.parameters["id"]!!.toInt()
                     call.respond(service.delete(id))
                 }
             }
             route("/faculty/{facultyId}") {
+
                 get {
-                    call.respond(service.findByFacultyId(call.parameters["facultyId"]!!.toInt()))
+                    val facultyId = call.parameters["facultyId"]!!.toInt()
+                    call.respond(service.findByFacultyId(facultyId))
                 }
             }
         }

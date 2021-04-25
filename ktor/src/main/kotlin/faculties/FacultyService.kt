@@ -2,7 +2,7 @@ package faculties
 
 class FacultyService(private val dao: FacultyDao) {
 
-    fun findAll():List<Faculty> = dao.findAll()
+    fun findAll(): List<Faculty> = dao.findAll()
 
     fun findById(id: Int): Faculty = dao.findById(id)
 

@@ -10,15 +10,13 @@ import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 import org.kodein.di.singleton
-import students.StudentDao
-import students.StudentService
 
-fun Application.facultyModule(){
+fun Application.facultyModule() {
 
     val service: FacultyService by closestDI().instance()
 
-    routing{
-        route("/faculties"){
+    routing {
+        route("/faculties") {
             get {
                 call.respond(service.findAll())
             }
@@ -26,17 +24,17 @@ fun Application.facultyModule(){
                 val request = call.receive<CreateFacultyRequest>()
                 call.respond(service.create(request.name))
             }
-            route("/{id}"){
-                get{
+            route("/{id}") {
+                get {
                     val id = call.parameters["id"]!!.toInt()
                     call.respond(service.findById(id))
                 }
-                put{
+                put {
                     val request = call.receive<UpdateFacultyRequest>()
                     val id = call.parameters["id"]!!.toInt()
                     call.respond(service.update(id, request.name))
                 }
-                delete{
+                delete {
                     val id = call.parameters["id"]!!.toInt()
                     call.respond(service.delete(id))
                 }

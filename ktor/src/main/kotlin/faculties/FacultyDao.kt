@@ -2,8 +2,6 @@ package faculties
 
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import students.Student
-import students.Students
 
 class FacultyDao(private val database: Database) {
 
@@ -12,20 +10,20 @@ class FacultyDao(private val database: Database) {
     }
 
     fun findById(id: Int): Faculty = transaction(database) {
-        Faculties.select{
+        Faculties.select {
             Faculties.id eq id
         }.map(::extractFaculty).single()
     }
 
-    fun create(name: String): Faculty = transaction(database){
+    fun create(name: String): Faculty = transaction(database) {
         val id = Faculties.insertAndGetId {
             it[Faculties.name] = name
         }
         Faculty(id.value, name)
     }
 
-    fun update(id: Int, name: String) = transaction(database){
-        Faculties.update({Faculties.id eq id}){
+    fun update(id: Int, name: String) = transaction(database) {
+        Faculties.update({ Faculties.id eq id }) {
             it[Faculties.name] = name
         }
     }

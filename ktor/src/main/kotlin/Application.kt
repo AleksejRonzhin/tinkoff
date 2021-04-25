@@ -31,7 +31,7 @@ fun main() {
     engine.start(wait = true)
 }
 
-fun DI.Builder.coreComponents(config: AppConfig){
+fun DI.Builder.coreComponents(config: AppConfig) {
     bind<AppConfig>() with singleton { config }
 
     bind<Database>() with singleton {
@@ -46,7 +46,7 @@ fun DI.Builder.coreComponents(config: AppConfig){
 fun migrate(database: DatabaseConfig) {
     Flyway
         .configure()
-        .dataSource(database.url, database.user,database.password)
+        .dataSource(database.url, database.user, database.password)
         .load()
         .migrate()
 }
