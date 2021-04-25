@@ -8,21 +8,6 @@ class StudentDao(private val database: Database) {
         Students.selectAll().map(::extractStudent)
     }
 
-    fun create(name: String, facultyId: Int): Student = transaction(database){
-        val id = Students.insertAndGetId {
-            it[Students.name] = name
-            it[Students.facultyId] = facultyId
-        }
-        Student(id.value, name, facultyId)
-    }
-
-    fun update(id: Int, name: String, facultyId: Int) = transaction(database){
-        Students.update({Students.id eq id}){
-            it[Students.name] = name
-            it[Students.facultyId] = facultyId
-        }
-    }
-
     fun findById(id: Int): Student = transaction(database){
         Students.select {
             Students.id eq id
@@ -35,8 +20,23 @@ class StudentDao(private val database: Database) {
         }.map(::extractStudent)
     }
 
-    fun moveToFaculties(id: Int, facultyId: Int) = transaction(database) {
+    fun moveToFaculty(id: Int, facultyId: Int) = transaction(database) {
         Students.update({Students.id eq id}){
+            it[Students.facultyId] = facultyId
+        }
+    }
+
+    fun create(name: String, facultyId: Int): Student = transaction(database){
+        val id = Students.insertAndGetId {
+            it[Students.name] = name
+            it[Students.facultyId] = facultyId
+        }
+        Student(id.value, name, facultyId)
+    }
+
+    fun update(id: Int, name: String, facultyId: Int) = transaction(database){
+        Students.update({Students.id eq id}){
+            it[Students.name] = name
             it[Students.facultyId] = facultyId
         }
     }

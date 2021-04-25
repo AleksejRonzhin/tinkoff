@@ -5,17 +5,14 @@ import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.response.*
 import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.sql.Database
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import org.kodein.di.ktor.di
 import org.kodein.di.singleton
 
 fun Application.studentModule() {
 
-//    val dao: StudentDao by closestDI().instance()
     val service: StudentService by closestDI().instance()
 
     routing {
@@ -41,4 +38,4 @@ fun DI.Builder.studentComponents() {
 }
 
 @Serializable
-public data class CreateStudentRequest(val name: String, val facultyId: Int)
+private data class CreateStudentRequest(val name: String, val facultyId: Int)
