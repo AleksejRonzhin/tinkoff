@@ -1,8 +1,10 @@
 package faculties
 
 import io.ktor.application.*
+import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import kotlinx.serialization.Serializable
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
@@ -20,6 +22,25 @@ fun Application.facultyModule(){
             get {
                 call.respond(service.findAll())
             }
+            post {
+                val request = call.receive<CreateFacultyRequest>()
+                call.respond(service.create(request.name))
+            }
+            route("/{id}"){
+                get{
+                    val id = call.parameters["id"]!!.toInt()
+                    call.respond(service.findById(id))
+                }
+                put{
+                    val request = call.receive<UpdateFacultyRequest>()
+                    val id = call.parameters["id"]!!.toInt()
+                    call.respond(service.update(id, request.name))
+                }
+                delete{
+                    val id = call.parameters["id"]!!.toInt()
+                    call.respond(service.delete(id))
+                }
+            }
         }
     }
 }
@@ -32,3 +53,9 @@ fun DI.Builder.facultyComponents() {
         FacultyService(instance())
     }
 }
+
+@Serializable
+private data class CreateFacultyRequest(val name: String)
+
+@Serializable
+private data class UpdateFacultyRequest(val name: String)

@@ -16,13 +16,38 @@ fun Application.studentModule() {
     val service: StudentService by closestDI().instance()
 
     routing {
-        route("/students"){
+        route("/students") {
             get {
                 call.respond(service.findAll())
             }
             post {
                 val request = call.receive<CreateStudentRequest>()
                 call.respond(service.create(request.name, request.facultyId))
+            }
+            route("/{id}") {
+                get {
+                    val id = call.parameters["id"]!!.toInt()
+                    call.respond(service.findById(id))
+                }
+                put {
+                    val id = call.parameters["id"]!!.toInt()
+                    val request = call.receive<UpdateStudentRequest>()
+                    call.respond(service.update(id, request.name, request.facultyId))
+                }
+                patch {
+                    val id = call.parameters["id"]!!.toInt()
+                    val request = call.receive<MoveToFacultyRequest>()
+                    call.respond(service.moveToFaculty(id, request.facultyId))
+                }
+                delete {
+                    val id = call.parameters["id"]!!.toInt()
+                    call.respond(service.delete(id))
+                }
+            }
+            route("/faculty/{facultyId}") {
+                get {
+                    call.respond(service.findByFacultyId(call.parameters["facultyId"]!!.toInt()))
+                }
             }
         }
     }
@@ -39,3 +64,9 @@ fun DI.Builder.studentComponents() {
 
 @Serializable
 private data class CreateStudentRequest(val name: String, val facultyId: Int)
+
+@Serializable
+private data class UpdateStudentRequest(val name: String, val facultyId: Int)
+
+@Serializable
+private data class MoveToFacultyRequest(val facultyId: Int)
